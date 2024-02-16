@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="../css/login.css">
+	<link rel="stylesheet" type="text/css" href="../css/readQR.css">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+		integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<title>Bán Cây Cảnh</title>
+    <link rel="icon" type="image/x-icon" href="/images/title_logo.png">
+	<!--===============================================================================================-->
+</head>
+
+<body>
+
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+								<div class="login100-pic js-tilt" data-tilt>
+									<div class="scanner">
+										<h1>
+											Quét QR Code để đăng nhập
+											<i class="fas fa-camera"></i>
+											<i class="fas fa-circle-stop"></i>
+										</h1>
+
+										<form class="scanner-form">
+											<input type="file" accept="image/*" hidden>
+
+											<img src="images/qrcode.png" alt="qr-code">
+
+											<video></video>
+
+											<div class="content">
+												<i class="fas fa-cloud-arrow-up"></i>
+												<p>Tải lên QR Code để quét</p>
+											</div>
+										</form>
+
+										<div class="scanner-details">
+											<div class="btn">
+												<button class="close">Đóng</button>
+											</div>
+										</div>
+									</div>
+								</div>
+
+				<form action="login" th:action="@{/login}" method="post" class="login100-form validate-form">
+					<h1 class="login100-form-title">
+						Đăng nhập thành viên
+					</h1>
+					
+					<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+						<input class="input100" id="username" type="text" name="username" placeholder="Tài khoản">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Password is required">
+						<input class="input100" id="password" type="password" name="password" placeholder="Mật khẩu">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					
+					<i class="pull-left text-danger center" th:text="${message}"></i>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Đăng nhập
+						</button>
+					</div>
+
+					<div class="text-center p-t-136">
+						<span class="txt2">
+							Chưa có tài khoản?
+						</span>
+						<a class="txt2" href="/register">
+							Tạo tài khoản
+						</a>
+					</div>
+
+					<div class="text-center p-t-136">
+						<span class="txt2" href="">
+							Đăng nhập bằng
+							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+						</span>
+						<a href="/oauth2/authorization/google">Google</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script src="/js/Instascan.min.js"></script>
+	<script src="/js/scanner.js"></script>
+	<script>
+		var a = document.getElementsByName("username").value;
+		var b = document.getElementsByName("password").value;
+		console.log("user: " + a + " " + "pass: " + b);
+	</script>
+</body>
+
+</html>

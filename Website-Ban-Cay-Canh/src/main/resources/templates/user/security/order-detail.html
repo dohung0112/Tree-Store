@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="/lib/fontawesome-free-6.1.1/css/all.min.css">
+<link rel="stylesheet" href="/css/my-account.css">
+<link rel="stylesheet" href="/css/style.css">
+	<title>Bán Cây Cảnh</title>
+    <link rel="icon" type="image/x-icon" href="/images/title_logo.png">
+</head>
+
+<body ng-app="shoppingCart" ng-controller="shoppingCart-ctrl">
+	<div class="wrapper" id="top">
+		<header>
+			<div th:replace="user/layout/_menu.html"></div>
+		</header>
+	</div>
+	<div class="container p-5">
+		<div class="d-flex align-items-start" ng-controller="profile-ctrl">
+			<div class="nav flex-column nav-pills me-3" id="v-pills-tab"
+				role="tablist" aria-orientation="vertical">
+				<a href="/account/info" class="nav-link active btn-return">Quay lại</a>
+			</div>
+			<div class="tab-content" id="v-pills-tabContent" >
+				<div class="tab-pane fade show active" id="v-pills-home"
+					role="tabpanel" aria-labelledby="v-pills-home-tab">
+					<div class="tab-pane fade active show" id="orders" ng-controller="order-ctrl">
+						<h3>Hoá đơn chi tiết</h3>
+						<div class="row">
+							<div class="col row">
+								<div class="col-4">
+									<div class="mb-4">Mã đơn: </div>
+									<div class="mb-4">Số điện thoại: </div>
+									<div class="mb-4">Ngày đặt đơn: </div> 
+									<div class="mb-4">Địa chỉ: </div>
+									
+								</div>
+								<div class="col-8">
+									<div class="mb-4">{{item.id}}</div>
+									<div class="mb-4">{{item.phone}}</div>
+									<div class="mb-4">{{item.create_date | date: 'dd/MM/yyyy'}}</div>
+									<div class="mb-4">{{item.address}}</div>
+								</div>
+							</div>
+							<div class="col row">
+								<div class="col-5">
+									<div class="mb-4">Trạng thái đơn hàng: </div>
+									<div class="mb-4">Phương thức thanh toán: </div>	
+									<div class="mb-4">Ngày cập nhật: </div>
+									<div class="mb-4">Ghi chú: </div>
+								</div>
+								<div class="col-7">
+									<div ng-if="item.status.id==1" class="mb-4 badge bg-secondary text-wrap text-status">{{item.status.name}}</div>
+									<div ng-if="item.status.id==2 || item.status.id==3 || item.status.id==4" 
+																	class="mb-4 badge bg-primary text-wrap text-status">{{item.status.name}}</div>
+									<div ng-if="item.status.id==5" class="mb-4 badge bg-success text-wrap text-status">{{item.status.name}}</div>
+									<div ng-if="item.status.id==6" class="mb-4 badge bg-danger text-wrap text-status">{{item.status.name}}</div>
+									<div class="mb-4">{{item.payment.name}}</div>
+									<div class="mb-4">{{item.update_date | date: 'dd/MM/yyyy'}}</div>
+									<div class="mb-4">{{item.note}}</div>
+									<em ng-if="item.note==null" class="mb-4">(Không có ghi chú)</em>
+								</div>
+							</div>
+						</div>
+						<div class="table-responsive">
+							<div class="mb-2">Sản phẩm đã đặt:</div>
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Mã sản phẩm</th>
+										<th>Ảnh</th>
+										<th>Tên</th>
+										<th>Loại</th>
+										<th>Số lượng</th>
+										<th>Giá</th>
+										<th>Tổng giá</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="op in item.details">
+										<td class="align-middle">{{op.id}}</td>
+										<td class="align-middle"><img class="order-img" ng-src="{{'../img/product/' + op.product.image}}" alt=""></td>
+										<td class="align-middle">{{op.product.name}}</td>
+										<td class="align-middle">{{op.product.categories.name}}</td>
+										<td class="align-middle">{{op.quantity}}</td>
+										<td class="align-middle">{{op.price | vndFilter}}</td>
+                						<td class="align-middle">{{(op.price * op.quantity) | vndFilter}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="my-3 row col-6">
+							<div class="col-5">
+								<div class="mb-4">Tổng tiền sản phẩm:</div>
+								<div class="mb-4">Giảm giá:</div>
+								<div class="mb-4">Phí vận chuyển:</div>
+								<div class="mb-4">Thành tiền:</div>
+							</div>
+							<div class="col-7">
+								<div class="mb-4">{{item.totalPrice | vndFilter}}</div>
+								<div class="mb-4">{{item.coupon ? item.coupon : 0}}%</div>
+								<div class="mb-4">{{item.ship ? item.ship : 0 | vndFilter}}</div>
+								<div class="mb-4 fw-bold">{{item.total | vndFilter}}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/js/account-scrpit.js"></script>
+	<div th:replace="user/layout/_script.html"></div>
+</body>
+</html>

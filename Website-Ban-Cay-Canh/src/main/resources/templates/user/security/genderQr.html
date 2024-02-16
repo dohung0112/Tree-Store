@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/gender.css">
+  <title>Cây Cảnh Phan Cường</title>
+  <link rel="icon" type="image/x-icon" href="/images/title_logo.png">
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>QR Code</h1>
+      <p>Nhập thông tin tài khoản để tạo QR Code</p>
+    </div>
+    <div class="input-form">
+      <input type="text" class="qr-username" th:value="${username}">
+      <input type="password" class="qr-password" th:value="${password}">
+
+      <button class="generate-btn">Nhấn để tạo</button>
+    </div>
+    <div class="qr-code">
+      <img src="images/qrcode.png" class="qr-image">
+    </div>
+  </div>
+
+  <script>
+    var container = document.querySelector(".container");
+    var generateBtn = document.querySelector(".generate-btn");
+    var qrusername = document.querySelector(".qr-username");
+    var qrpassword = document.querySelector(".qr-password");
+    var qrImg = document.querySelector(".qr-image");
+
+    generateBtn.onclick = function () {
+      if (qrusername.value.length && qrpassword.value.length > 0) {
+        generateBtn.innerText = "Generating QR Code..."
+        qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=" + qrusername.value + " " + qrpassword.value;
+        qrImg.onload = function () {
+          container.classList.add("active");
+          generateBtn.innerText = "Generate QR Code";
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cây Cảnh Phan Cường</title>
+  <link rel="icon" type="image/x-icon" href="/images/title_logo.png">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <link rel="stylesheet" href="../lib/fontawesome-free-6.1.1/css/all.min.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/contact.css" />
+  <link rel="icon" type="image/x-icon" href="../images/title_logo.png">
+</head>
+
+<body ng-app="shoppingCart" ng-controller="shoppingCart-ctrl">
+  <div class="wrapper" id="top">
+    <header>
+       <div th:replace="user/layout/_menu.html"></div>
+    </header>
+  </div>
+  <div class="map-area">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d524.8674771922257!2d106.7586997087674!3d10.86446965866304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527240365c7f9%3A0x247f681c3d41c10!2zTmjDoCB2xrDhu51uIFBoxrDGoW5nIELhuq9j!5e1!3m2!1svi!2s!4v1673404853567!5m2!1svi!2s"
+      width="600" height="450" style="border: 0" allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 col-md-12">
+        <div class="contact_message">
+          <h3>Thông tin về chúng tôi</h3>
+          <p>
+            Cửa hàng bán cây cảnh phan cường là một cửa hàng chuyên bán các loại cây cảnh
+            với nhiều mẫu mã và kích thước khác nhau, có nhân viên tư vấn chuyên nghiệp về việc chọn cây và cách chăm sóc cây
+            cảnh để cây phát triển tốt nhất.
+            Điều này làm cho cây cảnh phan cường trở thành một lựa chọn phổ biến cho việc trang trí nội thất và sân vườn.
+            Ngoài ra, các cửa hàng này còn cung cấp các loại chậu cây, phân bón và đất để trồng cây cảnh phan cường.
+          </p>
+          <ul>
+            <li>
+              <i class="fa fa-fax"></i> Địa chỉ : 19 Đ. Đào Trinh Nhất, Linh
+              Tây, Thủ Đức, Thành phố Hồ Chí Minh
+            </li>
+            <li><i class="fa fa-phone"></i> <a href="#">0903876251</a></li>
+            <li>
+              <i class="fa fa-envelope"></i><a href="tel:0903876251">mail@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6">
+        <div class="contact_message">
+          <h3>Gửi phản hồi của bạn về chúng tôi</h3>
+          <form id="contact-form" method="POST" action="../admin/assets/mail.php">
+            <p>
+              <label>Họ và tên (*)</label>
+              <input name="name" placeholder="Họ và tên *" type="text" required />
+            </p>
+            <p>
+              <label>Email (*)</label>
+              <input name="email" placeholder="Email *" type="email" required />
+            </p>
+            <p>
+              <label>Tiêu đề</label>
+              <input name="subject" placeholder="Tiêu đề *" type="text" />
+            </p>
+            <div class="contact_textarea">
+              <label>Phản hồi của bạn</label>
+              <textarea placeholder="... *" name="message" class="form-control2"></textarea>
+            </div>
+            <button type="submit">Gửi</button>
+            <p class="form-messege"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:replace="user/layout/_script.html"></div>
+</body>
+</html>

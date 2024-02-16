@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/cart-detail.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../lib/fontawesome-free-6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/form_payment.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+    </style>
+    <title>Bán Cây Cảnh</title>
+    <link rel="icon" type="image/x-icon" href="/images/title_logo.png">
+</head>
+
+<body ng-app="shoppingCart" ng-controller="shoppingCart-ctrl">
+    <div class="wrapper" id="top">
+        <header>
+            <div th:replace="user/layout/_menu.html"></div>
+        </header>
+    </div>
+    <div class="cart_detail_area">
+        <div class="container">
+            <form action="">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form_cart_wrap">
+                            <div class="table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="product_remove">#</th>
+                                            <th class="product_thumb">Ảnh</th>
+                                            <th class="product_name">Tên sản phẩm</th>
+                                            <th class="product-price">Giá</th>
+                                            <th class="product_quantity">Số lượng</th>
+                                            <th class="product_total">Tổng tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in cart.items">
+                                            <td class="product_remove"><a
+                                                    ng-click="cart.remove(item.id, item.idSize)"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                        fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                        <path fill-rule="evenodd"
+                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                    </svg></a>
+                                            </td>
+                                            <td class="product_thumb"><a href="/product/{{item.url}}"><img
+                                                        src="../img/product/{{item.image}}" alt=""></a></td>
+                                            <td class="product_name"><a href="/product/{{item.url}}">{{item.name}}</a>
+                                            </td>
+                                            <td class="product-price"><span ng-if="item.price">
+                                                    {{item.price | vndFilter}}
+                                                </span></td>
+                                            <td class="product_quantity"><label>Số lượng</label> <input type="number"
+                                                    min="1" ng-model="item.qty" ng-change="cart.saveToLocalStorage()">
+                                            </td>
+                                            <td class="product_total"><span ng-if="item.price" class="price_item">
+                                                    {{item.price * item.qty | vndFilter}}
+                                                </span>
+                                                <span ng-if="!item.price" class="price_item">
+                                                    {{item.priceSize * item.qty | vndFilter}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="coupon_area">
+                <div class="row">
+                    <div class="col-md-4 order-md-2 mb-4 coupon-area">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-muted">Tổng tiền giỏ hàng</span>
+
+                        </h4>
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">Tổng tiền dự tính</h6>
+                                </div>
+                                <span class="text-muted subtotal">{{cart.amount |
+                                    vndFilter}}</span>
+                            </li>
+                            <div id="coupon-area">
+                                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                    <div>
+                                        <h6 class="my-0">Giảm giá</h6>
+                                    </div>
+                                    <span class="text-muted" id="saleP">[[${sale}]]%</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                    <div>
+                                        <h6 class="my-0">Phí vận chuyển</h6>
+                                    </div>
+                                    <span class="text-muted" id="shipper"> {{shipmoney |vndFilter}} </span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Tổng tiền cần phải trả</span>
+                                    <strong id="total">{{(cart.amount -( cart.amount* (CouponSale/100)))+ shipmoney |
+                                        vndFilter}}</strong>
+
+                                </li>
+                                <span id="totalmoney" style="visibility: hidden">{{cart.amount -( cart.amount*
+                                    (CouponSale/100)) + shipmoney}}</span>
+                                <form class="card p-2 " id="coupon-apply" action="/coupon" method="POST">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="code" placeholder="Mã giảm giá">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-secondary">Áp dụng</button>
+                                        </div>
+                                    </div>
+                                    <span>[[${message}]]</span>
+                                </form>
+                            </div>
+                        </ul>
+
+                    </div>
+                    <div class="col-md-8 order-md-1">
+                        <h4 class="mb-3">Thông tin nhận hàng</h4>
+                        <form class="needs-validation" validate>
+                            <div class="mb-3">
+                                <input id="user_id" type="hidden" th:value="|${user_id}|"></input>
+                                <input type="hidden" ng-model="order.profile.id" value="{{userid}}" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name">Họ và tên</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    </div>
+                                    <input type="text" class="form-control" id="name" placeholder="Nhập họ và tên"
+                                        ng-value="formprofile.fullname" required>
+                                    <div class="invalid-feedback" style="width: 100%;">
+                                        Vui lòng nhập họ và tên
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone">Số điện thoại</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    </div>
+                                    <input type="tel" class="form-control" id="phone"
+                                        placeholder="Nhập số điện thoại..." ng-value="formprofile.phone"
+                                        pattern="[0-9]{10}" maxlength="12" required>
+                                    <div class="invalid-feedback" style="width: 100%;">
+                                        Vui lòng nhập số điện thoại
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label for="address">Địa chỉ</label>
+                                <input type="text" class="form-control" id="address" ng-value="formprofile.address"
+                                    placeholder="1234 Sài gòn" required>
+                                <div class="invalid-feedback">
+                                    Vui lòng nhập địa chỉ.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="note">Ghi chú</label>
+                                <textarea type="text" class="form-control" id="note" name="note" ng-model="order.note"
+                                    placeholder="..." rows="4" cols="50"></textarea>
+
+                            </div>
+
+                            <hr class="mb-4">
+
+                            <div>
+                                <h4 class="mb-3">Thanh toán</h4>
+
+                                <div class="d-block my-3">
+                                    <select ng-model="order.payment.id" class="form-control" required>
+                                        <option value="">-- Chọn phương thức thanh toán --</option>
+                                        <option ng-repeat="c in payment" ng-value="c.id">{{c.name}}</option>
+                                    </select>
+
+                                </div>
+                                <h4 class="mb-3">Phương thức vận chuyển</h4>
+
+                                <div class="d-block my-3" ng-click="clickship()">
+                                    <div class="custom-control custom-radio">
+                                        <input id="fast" name="ship" type="radio" class="custom-control-input"
+                                            value="35000" required>
+                                        <label class="custom-control-label" for="fast">Nhanh</label>
+                                    </div>
+
+                                    <div class="custom-control custom-radio">
+                                        <input id="normal" name="ship" type="radio" class="custom-control-input"
+                                            value="25000" checked required>
+                                        <label class="custom-control-label" for="normal">Thường</label>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="status" class="form-control" ng-model="order.status.id"
+                                    disabled>
+
+                            </div>
+                            <hr class="mb-4">
+                            <button class="btn btn-primary btn-lg btn-block" type="submit" ng-click="create()">Mua
+                                hàng</button>
+
+                            <h3 style="color: red">{{message}}</h3>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="user/layout/_script.html"></div>
+
+</body>
+
+</html>
